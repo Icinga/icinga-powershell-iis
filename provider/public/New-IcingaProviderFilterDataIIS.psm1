@@ -12,7 +12,7 @@ function New-IcingaProviderFilterDataIIS()
     );
 
     $IISData         = New-IcingaProviderObject                 -Name 'IIS';
-    $IISService      = Get-Service -Name 'IISADMIN'             -ErrorAction SilentlyContinue;
+    $IISService      = Get-Service -Name 'W3SVC'                -ErrorAction SilentlyContinue;
     $IISToolsPresent = Get-Command -Name 'Get-IISConfigSection' -ErrorAction SilentlyContinue;
 
     $IISData.Metadata | Add-Member -MemberType NoteProperty -Name 'IISHost'   -Value (Get-IcingaHostname);
