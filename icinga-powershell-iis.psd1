@@ -1,5 +1,5 @@
 @{
-    ModuleVersion     = '1.0.0'
+    ModuleVersion     = '1.1.0'
     GUID              = '8499369e-d98b-414e-93fd-ef771a545993'
     Author            = 'Lord Hepipud'
     CompanyName       = 'Icinga GmbH'
@@ -33,7 +33,7 @@
             ProjectUri   = 'https://github.com/Icinga/icinga-powershell-iis'
             ReleaseNotes = 'https://github.com/Icinga/icinga-powershell-iis/releases'
         };
-        Version  = 'v1.0.0'
+        Version  = 'v1.1.0'
         Name     = 'Windows IIS';
         Type     = 'plugins';
         Function = '';
