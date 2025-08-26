@@ -14,6 +14,7 @@ Released closed milestones can be found on [GitHub](https://github.com/Icinga/ic
 ### Bugfixes
 
 * [#3](https://github.com/Icinga/icinga-powershell-iis/pull/3) Fixes detection if IIS installed by using `W3SVC` as service name instead
+* [#5](https://github.com/Icinga/icinga-powershell-iis/pull/5) Fixes the App Pool health check by removing the WMI dependency for `root/Webadministrator` to ensure IIS-Tools are not required
 
 ## 1.0.0 (2025-01-31)
 

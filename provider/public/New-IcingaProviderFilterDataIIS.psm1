@@ -39,7 +39,6 @@ function New-IcingaProviderFilterDataIIS()
     [array]$AppPools        = Get-IISAppPool;
     $ConfigSection          = Get-IISConfigSection -SectionPath "system.applicationHost/applicationPools";
     $SitesCollection        = Get-IISConfigCollection -ConfigElement $ConfigSection;
-    [array]$AppPoolWorkers  = Get-IcingaWindowsInformation -Namespace 'root\WebAdministration' -ClassName 'WorkerProcess' | Select-Object 'AppPoolName', 'ProcessId';
     [array]$AppPoolPerfData = Get-IcingaWindowsInformation 'Win32_PerfFormattedData_PerfProc_Process' | Where-Object { $_.Name -Like '*w3wp*' };
     [array]$AppPoolPageFile = Get-IcingaWindowsInformation 'Win32_Process' | Where-Object { $_.Name -Like '*w3wp*' };
 
@@ -63,14 +62,18 @@ function New-IcingaProviderFilterDataIIS()
         $IISData.Metrics.AppPools.$AppPoolName | Add-Member -MemberType NoteProperty -Name 'MemoryLimit'  -Value $AttributeData.RawAttributes.privateMemory;
     }
 
-    foreach ($worker in $AppPoolWorkers) {
-        [string]$AppPoolName = $worker.AppPoolName;
+    foreach ($apppool in $AppPoolPageFile) {
+        if ($apppool.CommandLine -notmatch '-ap\s+"([^"]+)"') {
+            continue;
+        }
+
+        [string]$AppPoolName = $matches[1];
 
         if (Test-PSCustomObjectMember -PSObject $IISData.Metrics.AppPools -Name $AppPoolName) {
-            $IISData.Metrics.AppPools.$AppPoolName.ProcessId = $worker.ProcessId;
+            $IISData.Metrics.AppPools.$AppPoolName.ProcessId = $apppool.ProcessId;
 
             foreach ($perfdata in $AppPoolPerfData) {
-                if ($perfdata.IDProcess -eq $worker.ProcessId) {
+                if ($perfdata.IDProcess -eq $apppool.ProcessId) {
                     $IISData.Metrics.AppPools.$AppPoolName | Add-Member -MemberType NoteProperty -Name 'CPUUsage'    -Value $perfdata.PercentProcessorTime;
                     $IISData.Metrics.AppPools.$AppPoolName | Add-Member -MemberType NoteProperty -Name 'MemoryUsage' -Value $perfdata.WorkingSetPrivate;
                     $IISData.Metrics.AppPools.$AppPoolName | Add-Member -MemberType NoteProperty -Name 'ThreadCount' -Value $perfdata.ThreadCount;
@@ -78,7 +81,7 @@ function New-IcingaProviderFilterDataIIS()
                 }
             }
             foreach ($perfdata in $AppPoolPageFile) {
-                if ($perfdata.ProcessId -eq $worker.ProcessId) {
+                if ($perfdata.ProcessId -eq $apppool.ProcessId) {
                     $IISData.Metrics.AppPools.$AppPoolName | Add-Member -MemberType NoteProperty -Name 'PageFileUsage' -Value $perfdata.PageFileUsage;
                     break;
                 }
