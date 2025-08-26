@@ -7,6 +7,14 @@ documentation before upgrading to a new release.
 
 Released closed milestones can be found on [GitHub](https://github.com/Icinga/icinga-powershell-iis/milestones?state=closed).
 
+## 1.1.0 (2025-09-02)
+
+[Issue and PRs](https://github.com/Icinga/icinga-powershell-iis/milestone/2)
+
+### Bugfixes
+
+* [#3](https://github.com/Icinga/icinga-powershell-iis/pull/3) Fixes detection if IIS installed by using `W3SVC` as service name instead
+
 ## 1.0.0 (2025-01-31)
 
 [Issue and PRs](https://github.com/Icinga/icinga-powershell-iis/milestone/1)
