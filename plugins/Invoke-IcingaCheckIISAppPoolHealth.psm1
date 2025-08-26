@@ -7,7 +7,6 @@
 .ROLE
     ### WMI Permissions
 
-    * Root\WebAdministration
     * Win32_PerfFormattedData_PerfProc_Process
 .PARAMETER CPUWarning
     The CPU usage percentage that triggers a warning state.
