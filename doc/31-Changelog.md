@@ -7,7 +7,7 @@ documentation before upgrading to a new release.
 
 Released closed milestones can be found on [GitHub](https://github.com/Icinga/icinga-powershell-iis/milestones?state=closed).
 
-## 1.1.0 (2025-09-02)
+## 1.1.0 (2026-02-11)
 
 [Issue and PRs](https://github.com/Icinga/icinga-powershell-iis/milestone/2)
 
