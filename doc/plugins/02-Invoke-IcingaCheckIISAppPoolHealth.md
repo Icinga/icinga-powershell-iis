@@ -13,7 +13,6 @@ To execute this plugin you will require to grant the following user permissions.
 
 ### WMI Permissions
 
-* Root\WebAdministration
 * Win32_PerfFormattedData_PerfProc_Process
 
 ## Arguments
